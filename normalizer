@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+
+var readline = require('readline')
+const csvParser = require('./csvParser').parseRow
+const normalizerHelpers = require('./normalizerHelpers')
+
+let csvHeader = ''
+let normalizedData = []
+
+// Read from stdin
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+})
+
+let i = 0
+
+// Process stdin line-by-line
+rl.on('line', (line) => {
+  // Skip CSV header row
+  if (i === 0) {
+    csvHeader = line
+    i++
+    return
+  }
+
+  i++
+
+  // Parse line as CSV
+  const parsedRow = csvParser(line)
+
+  // Do some preprocessing for data that depends on other data
+  const address = (() => {
+    const _address = normalizerHelpers.address(parsedRow.address)
+    if (_address.includes(',')) return `"${_address}"`
+    return _address
+  })()
+  const fooDuration = normalizerHelpers.duration(parsedRow.fooDuration)
+  const barDuration = normalizerHelpers.duration(parsedRow.barDuration)
+
+  // Reconstruct our normalized CSV row
+  try {
+    const normalizedRow = [
+      normalizerHelpers.timestamp(parsedRow.timestamp),
+      address,
+      normalizerHelpers.zipCode(parsedRow.zip),
+      normalizerHelpers.fullName(parsedRow.fullName),
+      fooDuration,
+      barDuration,
+      normalizerHelpers.totalDuration(fooDuration, barDuration),
+      normalizerHelpers.notes(parsedRow.notes)
+    ]
+    normalizedData.push(normalizedRow.join(','))
+  } catch (e) {
+    // Warn user that the row is being skipped:
+    process.stderr.write(`There was an error parsing row ${i - 1}, skipping.`)
+  }
+})
+
+// Output data when finished reading all lines from stdin
+rl.on('close', () => {
+  normalizedData.unshift(csvHeader) // Put CSV header back
+  process.stdout.write(normalizedData.join('\n'))
+})
