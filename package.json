@@ -4,7 +4,9 @@
   },
   "dependencies": {
     "dayjs": "^1.8.14",
-    "dayjs-ext": "^2.2.0",
+    "dayjs-ext": "^2.2.0"
+  },
+  "devDependencies": {
     "jest": "^24.8.0"
   }
 }
