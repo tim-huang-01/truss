@@ -48,7 +48,7 @@ provided sample data until things looked "right".
 ## Notes
 The Unicode character set is confusing, probably
 because it encapsulates so much. Not only are there multiple
-specificatios, UTF-8, UTF-16, and UTF-32, but there are
+specifications, UTF-8, UTF-16, and UTF-32, but there are
 also multiple ways in which they're interepreted by available languages.
 Unicode also has the concept of [Planes](https://en.wikipedia.org/wiki/Plane_(Unicode)), which can add to the confusion.
 
