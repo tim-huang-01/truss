@@ -11,7 +11,7 @@ formatting of timestamps and filtering out invalid utf-8 characters.
 This program was written in Node.js and requires the node binary
 to be installed to run. There is also an external dependency
 for the date library used. The environment can be set up by doing:
-```
+```bash
 # 1. Install node (https://nodejs.org/en/download/)
 # 2. Clone this repo & install dependencies:
 git clone https://github.com/tim-huang-01/truss.git
@@ -19,12 +19,12 @@ cd truss && npm install --production
 ```
 
 As specified in requirements, one may run the program:
-```
+```bash
 ./normalizer < /path/to/sample.csv > ./output.csv
 ```
 
 A (very limited) test suite can be run:
-```
+```bash
 # Installs the jest test framework (devDependencies)
 npm install
 
