@@ -25,8 +25,11 @@ As specified in requirements, one may run the program:
 
 A (very limited) test suite can be run:
 ```
-yarn test
-# Assuming node and yarn are installed
+# Installs the jest test framework (devDependencies)
+npm install
+
+# Runs the test file
+npm run test
 ```
 
 ## Methodology
